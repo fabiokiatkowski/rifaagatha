@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/rifa', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/rifa', { useNewUrlParser: true });
 const conn = mongoose.connection;
 conn.once('open', () => console.log('Successfully connected in mongodb'));
 
@@ -31,4 +32,4 @@ routes.route('/').post((req, res) => {
 
 app.use('/users', routes);
 
-app.listen(3031, () => console.log('Server is running'))
+app.listen(process.env.PORT || 3031, () => console.log('Server is running'))
