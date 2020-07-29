@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
+const port = process.env.PORT || 3031;
 
 const app = express();
 
@@ -32,4 +33,4 @@ routes.route('/').post((req, res) => {
 
 app.use('/users', routes);
 
-app.listen(process.env.PORT || 3031, () => console.log('Server is running'))
+app.listen(port, () => console.log('Server is running'))
