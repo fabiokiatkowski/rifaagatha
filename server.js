@@ -24,8 +24,11 @@ routes.route('/').get((req, res) => {
     })
 });
 routes.route('/').post((req, res) => {
-    console.log(req.body);
-    const user = new User(req.body);
+    const data = {
+        ...req.body,
+        luckyNumber: Math.floor(100000 + Math.random() * 900000),
+    };
+    const user = new User(data);
     user.save()
         .then((user) => res.status(200).json(user))
         .catch((err) => console.error(err));
