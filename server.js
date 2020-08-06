@@ -19,7 +19,6 @@ const routes = express.Router();
 routes.route('/').get((req, res) => {
     User.find((err, user) => {
         if (err) console.error(err);
-        console.log(user);
         res.json(user);
     })
 });
@@ -33,6 +32,17 @@ routes.route('/').post((req, res) => {
         .then((user) => res.status(200).json(user))
         .catch((err) => console.error(err));
 });
+routes.route('/:id').put(async (req, res) => {
+    const id = req.params.id
+    const user = req.body;
+    const d = await User.updateOne({ "_id": `${id}` }, { confirmed: user.confirmed });
+    if (d.ok === 1) {
+        User.find((err, user) => {
+            if (err) console.error(err);
+            res.json(user);
+        })
+    }
+})
 
 app.use('/users', routes);
 
